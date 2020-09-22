@@ -1,5 +1,5 @@
-from Crypto.Cipher import AES, DES
-from Crypto.Random import get_random_bytes
+from Crypto.Cipher import AES
+
 
 def server():
     import socket
@@ -13,17 +13,16 @@ def server():
     s.listen(1)
     connection, address = s.accept();
     with connection:
-        a = connection.recv(1024)
-        key = connection.recv(1024)
+        a = connection.recv(1024);
         nonce = connection.recv(1024)
         tag =connection.recv(1024)
 
         print(a)
-        print(key)
         print(nonce)
         print(tag)
 
-        cipher = DES.new(key, DES.MODE_EAX, nonce=nonce)
+        key = b'Sixteen byte key'
+        cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
         plaintext = cipher.decrypt(a)
         try:
             cipher.verify(tag)
