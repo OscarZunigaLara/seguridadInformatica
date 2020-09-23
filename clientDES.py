@@ -2,8 +2,11 @@ import socket
 from Crypto.Cipher import DES
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
+from time import time
+
 
 def client():
+    start = time()
 
     host_name = socket.gethostname()
     IPAddress = socket.gethostbyname(host_name)
@@ -30,6 +33,8 @@ def client():
 
     s.close()
 
+
+    print(f'Time taken to run: {time() - start} seconds')
 
 if __name__ == '__main__':
     client()

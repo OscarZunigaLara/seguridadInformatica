@@ -1,9 +1,11 @@
 import socket
 from Crypto.Cipher import DES
 from Crypto.Cipher import AES
+from time import time
+
 
 def client():
-
+    start = time()
     host_name = socket.gethostname()
     IPAddress = socket.gethostbyname(host_name)
     print("Your Computer Name is:" + host_name)
@@ -12,7 +14,7 @@ def client():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((IPAddress, 1100))
 
-    data = (b'MENSAJE ENCRIPTADO CON DES')
+    data = (b'MENSAJE ENCRIPTADO CON AES')
     key = b'Sixteen byte key'
     cipher = AES.new(key, AES.MODE_EAX)
     nonce = cipher.nonce
@@ -24,7 +26,7 @@ def client():
     nonceSend = s.send(nonce)
     tagSende = s.send(tag)
     s.close()
-
+    print(f'Time taken to run: {time() - start} seconds')
 
 if __name__ == '__main__':
     client()

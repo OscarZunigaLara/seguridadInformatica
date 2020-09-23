@@ -1,5 +1,5 @@
 from Crypto.Cipher import AES
-
+from time import time
 
 def server():
     import socket
@@ -18,9 +18,9 @@ def server():
         tag =connection.recv(1024)
 
         print(a)
-        print(nonce)
-        print(tag)
-
+        #print(nonce)
+        #print(tag)
+        start = time()
         key = b'Sixteen byte key'
         cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
         plaintext = cipher.decrypt(a)
@@ -32,6 +32,7 @@ def server():
             print("KEY INCORRECT OR MESSAGE CORRUPTED")
 
         connection.close();
+        print(f'Time taken to run: {time() - start} seconds')
 
 
 if __name__ == '__main__':
